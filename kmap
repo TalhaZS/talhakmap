@@ -1,0 +1,80 @@
+#include <iostream>
+
+using namespace std;
+
+// Function to display the KMap for 2-3 variables
+void displayKMap(int kmap[], int variables) {
+    if (variables == 2) {
+        cout << "AB\n";
+        cout << "  0  1\n";
+        cout << "0 " << kmap[0] << "  " << kmap[1] << "\n";
+        cout << "1 " << kmap[2] << "  " << kmap[3] << "\n";
+    } else if (variables == 3) {
+        cout << " AB\n";
+        cout << "C 00 01 11 10\n";
+        for (int i = 0; i < 2; ++i) {
+            cout << i << " ";
+            for (int j = 0; j < 4; ++j) {
+                cout << kmap[i * 4 + j] << "  ";
+            }
+            cout << "\n";
+        }
+    }
+}
+
+// Function to get the location of ON bits (minterms or maxterms)
+void getOnBits(int onBits[], int nOnBits) {
+    cout << "Enter the locations of ON bits (space-separated): ";
+    for (int i = 0; i < nOnBits; ++i) {
+        cin >> onBits[i];
+    }
+}
+
+// Function to populate the KMap with given ON bits
+void populateKMap(int kmap[], int kmapSize, int onBits[], int nOnBits) {
+    for (int i = 0; i < kmapSize; ++i) {
+        kmap[i] = 0;
+    }
+    for (int i = 0; i < nOnBits; ++i) {
+        kmap[onBits[i]] = 1;
+    }
+}
+
+// Main function
+int main() {
+    int variables;
+    cout << "Enter the number of variables (2 to 5): ";
+    cin >> variables;
+
+    if (variables < 2 || variables > 5) {
+        cout << "Invalid number of variables. Please enter a number between 2 and 5.\n";
+        return 1;
+    }
+
+    int kmapSize = 1;
+    for (int i = 0; i < variables; ++i) {
+        kmapSize *= 2;
+    }
+    int kmap[kmapSize];
+
+    int nOnBits;
+    cout << "Enter the number of ON bits: ";
+    cin >> nOnBits;
+
+    int onBits[nOnBits];
+    getOnBits(onBits, nOnBits);
+    populateKMap(kmap, kmapSize, onBits, nOnBits);
+
+    // Display the KMap
+    if (variables == 2 || variables == 3) {
+        displayKMap(kmap, variables);
+    } else {
+        // Implement display for 4 and 5 variable KMap
+        // (Implementation omitted for brevity)
+    }
+
+    // Simplification and display of the simplified equation
+    // (Implementation omitted for brevity, involves KMap grouping and simplification)
+
+    return 0;
+}
